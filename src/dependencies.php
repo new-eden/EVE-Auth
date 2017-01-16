@@ -25,3 +25,14 @@ $container["logger"] = function (\Slim\Container $c) {
 $container["mongodb"] = function (\Slim\Container $c) {
     return new MongoDB\Client("mongodb://127.0.0.1:27017", array(), array("typeMap" => array("root" => "array", "document" => "array", "array" => "array")));
 };
+
+// Cache
+$container["cache"] = function(\Slim\Container $c) {
+    return new \EVEAuth\Lib\Cache();
+};
+
+// Session handler
+$container["sessionHandler"] = function(\Slim\Container $c) {
+    $cache = $c->get("cache");
+    return new \EVEAuth\Lib\Sessions($cache);
+};

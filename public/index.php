@@ -11,9 +11,6 @@ if(PHP_SAPI == 'cli-server') {
 // Include the autoloader
 require __DIR__ . '/../vendor/autoload.php';
 
-// Start the session
-session_start();
-
 // Instantiate the app
 $settings = require __DIR__ . '/../src/settings.php';
 $app = new \Slim\App($settings);
@@ -26,6 +23,12 @@ require __DIR__ . '/../src/middleware.php';
 
 // Register routes
 require __DIR__ . '/../src/routes.php';
+
+// Setup the session handler.
+$session = $container->get("sessionHandler");
+session_set_save_handler($session, true);
+session_cache_limiter(false);
+session_start();
 
 // Run app
 $app->run();
