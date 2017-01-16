@@ -8,5 +8,4 @@ class IndexController extends Controller {
     public function index($name = null) {
         return $this->render("index.twig", array("name" => $name));
     }
-
 }
