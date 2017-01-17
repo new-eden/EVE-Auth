@@ -2,6 +2,16 @@
 // DIC configuration
 $container = $app->getContainer();
 
+// Env
+$container["env"] = function(\Slim\Container $c) {
+    if(file_exists(__DIR__ . "/../.env.php"))
+        $env = require_once(__DIR__ . "/../.env.php");
+    else
+        throw new \Exception("Error, .env.php does not exist..");
+
+    return $env;
+};
+
 // View renderer
 $container["view"] = function (\Slim\Container $c) {
     $settings = $c->get("settings");
